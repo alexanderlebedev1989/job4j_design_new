@@ -6,7 +6,15 @@
 
     <groupId>ru.job4j</groupId>
     <artifactId>job4j_design_new</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>chapter_001</module>
+        <module>chapter_002</module>
+        <module>chapter_003</module>
+        <module>chapter_004</module>
+        <module>chapter_005</module>
+    </modules>
 
     <name>job4j_design_new</name>
 
@@ -23,4 +31,31 @@
             <version>4.12</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+        </plugins>
+    </build>
 </project>
