@@ -60,13 +60,11 @@ jrebel.lic
 
 # intellij
 *.eml
+*.iml
 *.ipr
 *.iws
 .*.sw?
 .idea
-*.iml
-*.xml
-
 
 # paulp script
 /.lib/
