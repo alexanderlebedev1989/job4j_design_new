@@ -1,12 +1,15 @@
 package ru.job4j.services;
 
-
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
 
 public class SimpleArrayIteratorTest {
 
