@@ -16,16 +16,12 @@ public class Config {
 
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(path))) {
-            List<String> list = new ArrayList<>();
-            read.lines().filter(s -> s.contains("=")).forEach(list::add);
-            for (String s : list) {
-                 String[] strings = s.split("=");
-                 values.put(strings[0], strings[1]);
-            }
+            read.lines().filter(s -> s.contains("=")).filter(s -> !s.isEmpty())
+                    .filter(s -> !s.startsWith("//")).
+                    map(s -> s.split("=")).forEach(strings -> values.put(strings[0], strings[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public String value(String key) {
@@ -39,18 +35,11 @@ public class Config {
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(path))) {
-            read.lines().filter(s -> s.contains("=")).forEach(out::add);
+            read.lines().filter(s -> s.contains("=")).filter(s -> !s.isEmpty())
+                    .filter(s -> !s.startsWith("//")).forEach(out::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return out.toString();
     }
-
-//    public static void main(String[] args) {
-//        Config config1 = new Config("./data/pair_without_comment.properties");
-//        Config config2 = new Config("./data/pair_with_comment.properties");
-//        System.out.println(config1.toString());
-//        System.out.println();
-//        System.out.println(config2.toString());
-//    }
 }

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 public class ConfigTest {
     @Test
     public void whenPairWithoutComment() {
-        String path = "./src/main/resources/pair_without_comment.properties";
+        String path = "./src/test/resources/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
         assertThat(
@@ -18,7 +18,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithComment() {
-        String path = "./src/main/resources/pair_with_comment.properties";
+        String path = "./src/test/resources/pair_with_comment.properties";
         Config config = new Config(path);
         config.load();
         assertThat(
