@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Analizy {
-
     private List<String> listTimes = new ArrayList<>();
     private String startTimes;
     private String endTimes;

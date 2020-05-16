@@ -14,8 +14,8 @@ public class AnalizyTest {
         List<String> list = List.of("Начало периода: 10:58:01, конец периода: 10:59:01",
                                     "Начало периода: 11:01:02, конец периода: 11:02:02");
         Analizy analizy = new Analizy();
-        String source = "./src/main/resources/server.log";
-        String target = "./src/main/resources/unavailable.csv";
+        String source = "./src/test/resources/server.log";
+        String target = "./src/test/resources/unavailable.csv";
         analizy.unavailable(source, target);
         try (BufferedReader read = new BufferedReader(new FileReader(target))) {
             String line;
