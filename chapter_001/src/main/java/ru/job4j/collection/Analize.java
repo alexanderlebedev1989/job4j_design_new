@@ -8,20 +8,24 @@ public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info(0, 0, 0);
-        int deleted = 0;
-        int changed = 0;
-        Map<Integer, User> currMap = new HashMap<>();
-        for (User user : current) {
-            currMap.put(user.getId(), user);
+        int countChanged = 0;
+        int countDelOrAdd = 0;
+        Map<Integer, User> map = new HashMap<>();
+        for (User pUser : previous) {
+            map.put(pUser.getId(), pUser);
         }
-        for (User u : previous) {
-            deleted += (!currMap.containsKey(u.getId()) ? 1 : 0);
-            changed += (currMap.containsKey(u.getId())
-                    && !u.getName().equals(currMap.get(u.getId()).getName()) ? 1 : 0);
+        for (User cUser : current) {
+            if (map.containsKey(cUser.getId())) {
+                countDelOrAdd++;
+                User user = map.get(cUser.getId());
+                if (!user.getName().equals(cUser.getName())) {
+                    countChanged++;
+                }
+            }
         }
-        info.setDeleted(deleted);
-        info.setAdded(current.size() - (previous.size() - deleted));
-        info.setChanged(changed);
+        info.setDeleted(previous.size() - countDelOrAdd);
+        info.setAdded(current.size() - countDelOrAdd);
+        info.setChanged(countChanged);
         return info;
     }
 
@@ -50,11 +54,23 @@ public class Analize {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             Info info = (Info) o;
-            if (added != info.added) return false;
-            if (changed != info.changed) return false;
+
+            if (added != info.added) {
+                return false;
+            }
+
+
+            if (changed != info.changed) {
+                return false;
+            }
             return deleted == info.deleted;
         }
 

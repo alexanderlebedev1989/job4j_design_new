@@ -13,6 +13,8 @@
         <module name="chapter_004" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="12" />
+    <bytecodeTargetLevel target="12">
+      <module name="chapter_001" target="12" />
+    </bytecodeTargetLevel>
   </component>
 </project>
