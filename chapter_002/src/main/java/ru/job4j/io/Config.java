@@ -36,7 +36,7 @@ public class Config {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(path))) {
             read.lines().filter(s -> s.contains("=")).filter(s -> !s.isEmpty())
-                    .filter(s -> !s.startsWith("//")).forEach(out::add);
+                    .filter(s -> !s.startsWith("#")).forEach(out::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
