@@ -13,12 +13,11 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 public class SearchFiles extends SimpleFileVisitor<Path> {
     private Function<Path, Boolean> function;
     private Boolean result = true;
+    private List<Path> paths = new ArrayList<>();
 
     public SearchFiles(Function<Path, Boolean> function) {
         this.function = function;
     }
-
-    private List<Path> paths = new ArrayList<>();
 
     public List<Path> getPaths() {
         return paths;

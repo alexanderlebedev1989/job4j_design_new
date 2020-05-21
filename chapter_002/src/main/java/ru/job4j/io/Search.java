@@ -12,6 +12,7 @@ public class Search {
         Path start = Paths.get(args[0]);
         search(start, args[1]).forEach(System.out::println);
     }
+
     public static List<Path> search(Path root, String ext) throws IOException {
         SearchFiles searcher = new SearchFiles(path -> path.toFile().getName().endsWith(ext));
         Files.walkFileTree(root, searcher);
