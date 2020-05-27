@@ -1,4 +1,4 @@
-package ru.job4j.io;
+package ru.job4j.search;
 
 import java.io.*;;
 import java.nio.file.Files;
@@ -35,9 +35,10 @@ public class Zip {
     }
 
     public List<File> seekBy(ArgZip args) throws IOException {
+        SearchFiles sf = new SearchFiles(path -> !path.toFile().getName().endsWith(args.exclude()));
         Path folder = Paths.get(args.directory());
-        Files.walkFileTree(folder, args);
-        return args.getFiles();
+        Files.walkFileTree(folder, sf);
+        return sf.getFiles();
     }
 
     public static void main(String[] args) throws IOException {
@@ -46,7 +47,7 @@ public class Zip {
                 new File("./chapter_002/pom.zip")
         );
 
-        ArgZip argZip = new ArgZip(new String[]{args[0], args[1], args[2]});
+        ArgZip argZip = new ArgZip(args);
         argZip.parse(args);
 
         Zip zip = new Zip();
