@@ -10,28 +10,27 @@ public class ConsoleChat {
     private List<String> sayWords = new ArrayList<>();
     private Random rand = new Random();
     private File file;
-    private boolean exit = false;
+    private boolean finish = false;
     private boolean stop = false;
+    private final String STOP = "стоп";
+    private final String CONTINUE = "продолжить";
+    private final String FINISH = "закончить";
 
     public ConsoleChat(File file) {
         this.file = file;
     }
 
-    public void writeRecord(String word, File file) {
-        try (FileOutputStream out = new FileOutputStream(file, true)) {
-            out.write((word + System.lineSeparator()).getBytes());
+    public void writeRecord() {
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
+            for (String str : sayWords)
+                out.print(str + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
-    public void randomAnswer(String word) {
-        sayWords.add(word);
-        int index = rand.nextInt(sayWords.size());
-        System.out.println(sayWords.get(index));
-    }
-
-    public void readRecord(File file) {
+    public void readRecord() {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String s;
             while ((s = br.readLine()) != null) {
@@ -43,25 +42,27 @@ public class ConsoleChat {
     }
 
     public void startRecord() {
-        Random rand = new Random();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            while (!exit) {
+            while (!finish) {
                 System.out.println("Введите слово или фразу");
                 String say = br.readLine();
-                writeRecord(say, file);
-                if (say.equals("закончить")) {
+                sayWords.add(say);
+                if (say.equals(FINISH)) {
                     System.out.println();
                     System.out.println("===Текстовый лог===");
-                    readRecord(file);
+                    writeRecord();
+                    readRecord();
                     System.out.println("===Программа завершена===");
-                    exit = true;
+                    finish = true;
                     stop = true;
                 } else {
-                    if (say.equals("стоп")) stop = true;
-                    else if (say.equals("продолжить")) stop = false;
+                    if (say.equals(STOP)) stop = true;
+                    else if (say.equals(CONTINUE)) stop = false;
                 }
-                if (!stop)
-                    randomAnswer(say);
+                if (!stop) {
+                    int index = rand.nextInt(sayWords.size());
+                    System.out.println(sayWords.get(index));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
