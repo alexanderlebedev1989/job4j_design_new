@@ -7,22 +7,30 @@ import java.util.Random;
 
 
 public class ConsoleChat {
-    private List<String> sayWords = new ArrayList<>();
+
+    private List<String> answers = new ArrayList<>();
+    private List<String> log = new ArrayList<>();
+
     private Random rand = new Random();
-    private File file;
+
+    private File logText;
+    private File textFish;
+
     private boolean finish = false;
     private boolean stop = false;
+
     private final String STOP = "стоп";
     private final String CONTINUE = "продолжить";
     private final String FINISH = "закончить";
 
-    public ConsoleChat(File file) {
-        this.file = file;
+    public ConsoleChat(File logText, File textFish) {
+        this.logText = logText;
+        this.textFish = textFish;
     }
 
-    public void writeRecord() {
-        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
-            for (String str : sayWords)
+    public void writeToLog() {
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(logText)))) {
+            for (String str : log)
                 out.print(str + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,12 +38,9 @@ public class ConsoleChat {
         }
     }
 
-    public void readRecord() {
+    public void read(File file, List<String> list) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String s;
-            while ((s = br.readLine()) != null) {
-                System.out.println(s);
-            }
+            br.lines().forEach(list::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,12 +51,10 @@ public class ConsoleChat {
             while (!finish) {
                 System.out.println("Введите слово или фразу");
                 String say = br.readLine();
-                sayWords.add(say);
+                log.add(say);
+                read(textFish, answers);
                 if (say.equals(FINISH)) {
-                    System.out.println();
-                    System.out.println("===Текстовый лог===");
-                    writeRecord();
-                    readRecord();
+                    writeToLog();
                     System.out.println("===Программа завершена===");
                     finish = true;
                     stop = true;
@@ -60,8 +63,9 @@ public class ConsoleChat {
                     else if (say.equals(CONTINUE)) stop = false;
                 }
                 if (!stop) {
-                    int index = rand.nextInt(sayWords.size());
-                    System.out.println(sayWords.get(index));
+                    int index = rand.nextInt(answers.size());
+                    log.add(answers.get(index));
+                    System.out.println(answers.get(index));
                 }
             }
         } catch (IOException e) {
