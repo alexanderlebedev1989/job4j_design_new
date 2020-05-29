@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 public class EchoServer {
-
     private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) {
