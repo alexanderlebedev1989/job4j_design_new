@@ -6,17 +6,29 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class EchoServer {
+
     private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
+
+    public List<String> readFishText(File file) {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            br.lines().forEach(lines::add);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
 
     public static void main(String[] args) {
 
-        List<String> answers = List.of("How are you?", "What", "No money", "I am from Russia", "How much?");
-        Random rand = new Random();
         boolean connection = true;
+        Random rand = new Random();
+        List<String> answers = new EchoServer().readFishText(new File("FishText.txt"));
 
         try (ServerSocket server = new ServerSocket(9000)) {
             while (connection) {
