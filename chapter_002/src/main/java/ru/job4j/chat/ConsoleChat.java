@@ -38,9 +38,9 @@ public class ConsoleChat {
         }
     }
 
-    public void read(File file, List<String> list) {
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            br.lines().forEach(list::add);
+    public void readFishText() {
+        try (BufferedReader br = new BufferedReader(new FileReader(textFish))) {
+            br.lines().forEach(answers::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class ConsoleChat {
                 System.out.println("Введите слово или фразу");
                 String say = br.readLine();
                 log.add(say);
-                read(textFish, answers);
+                readFishText();
                 if (say.equals(FINISH)) {
                     writeToLog();
                     System.out.println("===Программа завершена===");
