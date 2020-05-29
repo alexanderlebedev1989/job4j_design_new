@@ -2,19 +2,23 @@ package ru.job4j.socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.Random;
 
 public class EchoServer {
 
     private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) {
+
+        List<String> answers = List.of("How are you?", "What", "No money", "I am from Russia", "How much?");
+        Random rand = new Random();
         boolean connection = true;
+
         try (ServerSocket server = new ServerSocket(9000)) {
             while (connection) {
                 Socket socket = server.accept();
@@ -32,8 +36,10 @@ public class EchoServer {
                             connection = false;
                         }
                         if (str.contains("Any")) {
+                            int index = rand.nextInt(answers.size());
+                            String answer = answers.get(index);
                             out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                            out.write("Any".getBytes());
+                            out.write(answer.getBytes());
                         }
                     }
                 }
