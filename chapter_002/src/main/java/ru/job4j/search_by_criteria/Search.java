@@ -9,6 +9,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
@@ -16,21 +17,19 @@ public class Search extends SimpleFileVisitor<Path> {
 
     private final List<File> files = new ArrayList<>();
 
-    private Function<Path, Boolean> function;
-
-    public Search(Function<Path, Boolean> function) {
-        this.function = function;
-    }
+    private Predicate<Path> paths;
 
     public List<File> getFiles() {
         return files;
     }
 
-
+    public Search(Predicate<Path> paths) {
+        this.paths = paths;
+    }
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        boolean result = function.apply(file);
+        boolean result = paths.test(file);
         if (result) {
            files.add(file.toFile());
         }
