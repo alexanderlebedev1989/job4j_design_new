@@ -13,9 +13,7 @@ public class ArgKeys {
     private final String OUTPUT = "o";
 
     private int countArguments = 7;
-
     private String[] args;
-
     private Map<String, String> values = new HashMap<>();
 
     public Map<String, String> getValues() {
@@ -25,11 +23,9 @@ public class ArgKeys {
     public String getMASK() {
         return MASK;
     }
-
     public String getREGEX() {
         return REGEX;
     }
-
     public String getFULL() {
         return FULL;
     }
@@ -41,11 +37,9 @@ public class ArgKeys {
     public String directory() {
         return check(DIRECTORY);
     }
-
     public String name() {
         return check(NAME);
     }
-
     public String output() {
         return check(OUTPUT);
     }
@@ -68,8 +62,9 @@ public class ArgKeys {
 
     public String check(String arg) {
         if (!values.containsKey(arg))
-            throw new IllegalArgumentException("specify the correct keys: -d - search directory: " +
-                    "-m - search by name, mask, regular expression; " +
+            throw new IllegalArgumentException("specify the correct keys: -d - search directory; " +
+                    "-n - file name (full name, mask, regular expression" +
+                    "-f - search by name, -m - search by mask, -f - search by regular expression; " +
                     "-o - file to write");
         return values.get(arg);
     }

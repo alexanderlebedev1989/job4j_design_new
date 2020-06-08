@@ -76,7 +76,7 @@ public class SearchByCriteriaTest {
 
     @Test
     public void whenWriteThenFilesShouldBeSelectedByMask() throws IOException {
-        String[] args = {"-d", "./src/main/java/ru/job4j/chat", "-n", "java", "-m", "-o", "test.txt"};
+        String[] args = {"-d", "./src/main/java/ru/job4j/chat", "-n", "*.java", "-m", "-o", "test.txt"};
         ArgKeys argKeys = new ArgKeys(args);
         argKeys.parse(args);
         SearchByCriteria searchByCriteria = new SearchByCriteria();

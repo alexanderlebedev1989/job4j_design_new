@@ -15,8 +15,7 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class Search extends SimpleFileVisitor<Path> {
 
-    private final List<File> files = new ArrayList<>();
-
+    private List<File> files = new ArrayList<>();
     private Predicate<Path> paths;
 
     public List<File> getFiles() {
