@@ -35,7 +35,6 @@ class Shell {
      * метод, который реализует строковое представление пути
      * @return возвращает строку ввиде путя
      */
-
     public String path() {
         if (newPath == null) {
             return "/";
@@ -49,7 +48,6 @@ class Shell {
      * @param path строка, которая является входным параметром для формирования строкового представления пути
      * @return возвращает строку ввиде путя
      */
-
     public String goToNext(String path) {
         if (newPath.equals(delimiter)) {
             newPath += path;
@@ -63,7 +61,6 @@ class Shell {
      * метод работает, когда необходимо вернуться в предыдущий каталог.
      * @return возвращает строку ввиде путя
      */
-
     public String goBack() {
         StringBuilder sb = new StringBuilder();
         String[] strings = newPath.split("/");
@@ -80,7 +77,6 @@ class Shell {
      * @param path строка, которая является входным параметром для формирования строкового представления пути
      * @return возвращает строку путя с названием каталога, куда перешел пользователь
      */
-
     public String goToFolder(String path) {
         String[] strings = path.split("/");
         for (String s : strings) {
