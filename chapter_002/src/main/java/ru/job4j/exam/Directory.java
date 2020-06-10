@@ -1,5 +1,7 @@
 package ru.job4j.exam;
 
+import java.util.Stack;
+
 /**
  * Class Shell имитирует общие структуры каталогов
  * @autor Lebedev A.
@@ -7,8 +9,9 @@ package ru.job4j.exam;
  */
 class Shell {
 
-    private String newPath;
+    private Stack<String> commands = new Stack<>();
     private String delimiter = "/";
+
     private final String NEXT = "[a-z]*";
     private final String BACK = "\\.\\.";
     private final String CATALOG = "//[a-z]*///";
@@ -16,17 +19,21 @@ class Shell {
     /**
      * метод, который создает путь к необходимому месту в файловой системе
      * @param path строка, которая является входным параметром для формирования строкового представления пути
-     * @return возвращает объект класса Shell, который содержит обновленный путь.
+     * @return возвращает объект класса Shell, который содержит стек вызванных команд.
      */
     Shell cd(final String path) {
-        if (newPath == null) {
-            newPath = path;
+        if (commands.empty() && delimiter.equals(path)) {
+            commands.push(path);
         } else if (path.matches(NEXT)) {
-            newPath = goToNext(path);
+            commands = goToNext(path);
         } else if (path.matches(BACK)) {
-            newPath = goBack();
+            commands.pop();
+            commands.pop();
         } else if (path.matches(CATALOG)) {
-            newPath = goToFolder(path);
+            while (!commands.empty() && !commands.peek().equals(delimiter)) {
+                commands.pop();
+            }
+            commands = goToFolder(path);
         }
         return this;
     }
@@ -36,55 +43,45 @@ class Shell {
      * @return возвращает строку ввиде путя
      */
     public String path() {
-        if (newPath == null) {
-            return "/";
+        StringBuilder sb = new StringBuilder();
+        if (commands.empty()) {
+            return delimiter;
         } else {
-            return newPath;
+            for (String str: commands) {
+                sb.append(str);
+            }
+            return sb.toString();
         }
     }
 
     /**
      * метод работает, когда необходимо перейти в следующий каталог
      * @param path строка, которая является входным параметром для формирования строкового представления пути
-     * @return возвращает строку ввиде путя
+     * @return возвращает стек с добавленной командой
      */
-    public String goToNext(String path) {
-        if (newPath.equals(delimiter)) {
-            newPath += path;
+    public Stack<String> goToNext(String path) {
+        if (commands.peek().equals(delimiter)) {
+            commands.push(path);
         } else {
-            newPath += delimiter + path;
+            commands.push(delimiter);
+            commands.push(path);
         }
-        return newPath;
-    }
-
-    /**
-     * метод работает, когда необходимо вернуться в предыдущий каталог.
-     * @return возвращает строку ввиде путя
-     */
-    public String goBack() {
-        StringBuilder sb = new StringBuilder();
-        String[] strings = newPath.split("/");
-        for (int i = 0; i < strings.length - 1; i++) {
-            if (!strings[i].equals("")) {
-                sb.append(delimiter).append(strings[i]);
-            }
-        }
-        return sb.toString();
+        return commands;
     }
 
     /**
      * метод работает, когда необходимо перейти в новый каталог
      * @param path строка, которая является входным параметром для формирования строкового представления пути
-     * @return возвращает строку путя с названием каталога, куда перешел пользователь
+     * @return возвращает стек с добавленной командой
      */
-    public String goToFolder(String path) {
+    public Stack<String> goToFolder(String path) {
         String[] strings = path.split("/");
         for (String s : strings) {
             if (!s.equals("")) {
-                newPath = delimiter + s;
+                commands.push(s);
             }
         }
-        return newPath;
+        return commands;
     }
 }
 
