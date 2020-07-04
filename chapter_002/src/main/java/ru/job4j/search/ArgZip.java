@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ArgZip extends SimpleFileVisitor<Path> {
+public class ArgZip {
 
     private final String[] args;
 

@@ -10,7 +10,7 @@ public class SimpleQueue<T>  {
 
 
     public T poll() {
-        while (!in.isEmpty()) {
+        while (!in.isEmpty) {
             T value = in.pop();
             out.push(value);
         }
