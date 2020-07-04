@@ -20,7 +20,6 @@ CREATE TABLE items (
     status_id INT REFERENCES status (id)
 );
 
-
 1. Нужно написать запрос, который получит список всех заявок и количество подтвердивших участников
 SELECT i.meeting_id, COUNT (status_id) FROM items AS i
 INNER JOIN status AS s ON i.status_id = s.id
