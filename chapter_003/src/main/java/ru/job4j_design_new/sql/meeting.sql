@@ -21,10 +21,10 @@ CREATE TABLE items (
 );
 
 1. Нужно написать запрос, который получит список всех заявок и количество подтвердивших участников
-SELECT i.meeting_id, COUNT (status_id) FROM items AS i
-INNER JOIN status AS s ON i.status_id = s.id
-WHERE s.id = (SELECT id FROM status WHERE s_name = 'confirmed')
-GROUP BY i.meeting_id;
+SELECT m.m_name, COUNT (status_id) FROM meeting AS m
+INNER JOIN items AS i ON m.id = i.meeting_id
+INNER JOIN status AS s ON s.id = i.status_id
+WHERE s.s_name = 'confirmed' GROUP BY m.m_name;
 
 2. Нужно получить все совещания, где не было ни одной заявки на посещения
 SELECT m.m_name FROM meeting AS m
