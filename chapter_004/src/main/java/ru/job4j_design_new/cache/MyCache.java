@@ -16,6 +16,9 @@ public class MyCache implements Cache<String> {
         if (!cache.containsValue(cache.get(key))) {
             addCache(key);
         }
+        if (cache.get(key) == null) {
+            addCache(key);
+        }
         return cache.get(key).get();
     }
 
