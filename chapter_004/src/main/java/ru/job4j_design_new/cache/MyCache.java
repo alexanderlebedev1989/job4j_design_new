@@ -13,13 +13,13 @@ public class MyCache implements Cache<String> {
 
     @Override
     public String getCache(String key) {
-        if (!cache.containsValue(cache.get(key))) {
+        String rsl = "";
+        if (cache.containsValue(cache.get(key)) && cache.get(key).get() != null) {
+            rsl = cache.get(key).get();
+        } else {
+            rsl = read(key);
             addCache(key);
         }
-        if (cache.get(key) == null) {
-            addCache(key);
-        }
-        String rsl = cache.get(key).get();
         return rsl;
     }
 
