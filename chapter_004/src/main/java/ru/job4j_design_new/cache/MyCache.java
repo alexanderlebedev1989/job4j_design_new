@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class MyCache implements Cache<String> {
-
     private Map<String, SoftReference<String>> cache = new HashMap<>();
 
     @Override
