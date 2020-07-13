@@ -17,16 +17,9 @@ public class MyCache implements Cache<String> {
             rsl = cache.get(key).get();
         } else {
             rsl = read(key);
-            addCache(key);
+            cache.put(key, new SoftReference<>(rsl));
         }
         return rsl;
-    }
-
-    @Override
-    public void addCache(String key) {
-        String result = read(key);
-        SoftReference<String> strSoft = new SoftReference<>(result);
-        cache.put(key, strSoft);
     }
 
     public String read(String key) {
