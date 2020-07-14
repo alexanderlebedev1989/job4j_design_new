@@ -38,7 +38,7 @@ public class CinemaTest {
     }
 
     @Test
-    public void whenBuyTicketThenAddAccount() {
+    public void whenGoToWatchThenShowTheTicket() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
