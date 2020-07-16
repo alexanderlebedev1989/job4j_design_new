@@ -2,10 +2,10 @@ package ru.job4j_design_new.srp;
 
 import java.util.function.Predicate;
 
-public class ReportEngineAccounting implements Report {
+public class GeneratorEngine implements Generator {
     private Store store;
 
-    public ReportEngineAccounting(Store store) {
+    public GeneratorEngine(Store store) {
         this.store = store;
     }
 
@@ -18,7 +18,7 @@ public class ReportEngineAccounting implements Report {
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
-                    .append("$").append(employee.getSalary()).append(";")
+                    .append(employee.getSalary()).append("рублей").append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();

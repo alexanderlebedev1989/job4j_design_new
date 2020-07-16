@@ -2,10 +2,11 @@ package ru.job4j_design_new.srp;
 
 import java.util.function.Predicate;
 
-public class ReportEngineProgrammers implements Report {
+public class GeneratorHTML implements Generator {
+
     private Store store;
 
-    public ReportEngineProgrammers(Store store) {
+    public GeneratorHTML(Store store) {
         this.store = store;
     }
 
