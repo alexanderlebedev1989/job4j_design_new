@@ -12,7 +12,7 @@ public class GeneratorEngineTest {
         Calendar now = Calendar.getInstance();
         Employer worker = new Employer("Ivan", now, now, 100);
         store.add(worker);
-        GeneratorEngine engine = new GeneratorEngine(store);
+        Generator engine = new GeneratorEngine(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())
@@ -32,7 +32,7 @@ public class GeneratorEngineTest {
         Employer worker = new Employer("Ivan", now, now, 100);
         store.add(worker);
         Generator XML = new GeneratorXML(store);
-        ProgrammersReport report = new ProgrammersReport(XML);
+        Report report = new ProgrammersReport(XML);
         StringBuilder expect = new StringBuilder()
                 .append("<REPORT>")
                 .append(System.lineSeparator())
@@ -55,7 +55,7 @@ public class GeneratorEngineTest {
         Employer worker = new Employer("Ivan", now, now, 100);
         store.add(worker);
         Generator HTML = new GeneratorHTML(store);
-        ProgrammersReport report = new ProgrammersReport(HTML);
+        Report report = new ProgrammersReport(HTML);
         StringBuilder expect = new StringBuilder()
                 .append("<p>&quot;Name; Hired; Fired; Salary&quot;</p>")
                 .append(System.lineSeparator())
@@ -76,7 +76,7 @@ public class GeneratorEngineTest {
         Employer worker = new Employer("Ivan", now, now, 100);
         store.add(worker);
         Generator JSON = new GeneratorJSON(store);
-        ProgrammersReport report = new ProgrammersReport(JSON);
+        Report report = new ProgrammersReport(JSON);
         StringBuilder expect = new StringBuilder()
                 .append("{")
                 .append(System.lineSeparator())
@@ -102,7 +102,7 @@ public class GeneratorEngineTest {
         Employer worker = new Employer("Ivan", now, now, 10);
         store.add(worker);
         Generator XML = new GeneratorXML(store);
-        AccountingReport report = new AccountingReport(XML);
+        Report report = new AccountingReport(XML);
         StringBuilder expect = new StringBuilder()
                 .append("<REPORT>")
                 .append(System.lineSeparator())
