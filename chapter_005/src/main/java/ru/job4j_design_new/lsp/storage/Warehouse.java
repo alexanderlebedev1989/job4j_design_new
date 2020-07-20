@@ -1,21 +1,33 @@
 package ru.job4j_design_new.lsp.storage;
 
 import ru.job4j_design_new.lsp.food.Food;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Warehouse implements IStorage {
 
-    private Map<String, Food> storageWarehouse = new HashMap<>();
+    private final List<Food> storageWarehouse;
 
-    @Override
-    public void add(Food food) {
-        storageWarehouse.put(food.getName(), food);
+    public Warehouse() {
+        this.storageWarehouse = new ArrayList<>();
     }
 
     @Override
-    public Food getFood(String name) {
-        return storageWarehouse.get(name);
+    public void add(Food food) {
+        storageWarehouse.add(food);
+    }
+
+    @Override
+    public boolean accept(Food food) {
+        int percentUsed = food.getTimeDifference();
+        return percentUsed < food.getSUITABLE();
+    }
+
+    @Override
+    public List<Food> clear() {
+        List<Food> foods = new ArrayList<>(storageWarehouse);
+        storageWarehouse.clear();
+        return foods;
     }
 }

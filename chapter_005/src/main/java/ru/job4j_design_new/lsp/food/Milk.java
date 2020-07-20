@@ -7,6 +7,4 @@ public class Milk extends Food {
     public Milk(String name, LocalDate createDate, LocalDate expireDate, double price, int discount) {
         super(name, createDate, expireDate, price, discount);
     }
-
-
 }
