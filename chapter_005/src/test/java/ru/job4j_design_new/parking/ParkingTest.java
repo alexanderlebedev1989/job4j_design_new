@@ -1,10 +1,15 @@
 package ru.job4j_design_new.parking;
 
 import org.junit.Test;
-import ru.job4j_design_new.lsp_2.car.Car;
-import ru.job4j_design_new.lsp_2.parking.*;
-import ru.job4j_design_new.lsp_2.service.Service;
-import ru.job4j_design_new.lsp_2.service.ServiceFindPlace;
+import ru.job4j_design_new.lsp_new.car.Car;
+import ru.job4j_design_new.lsp_new.manager.IManager;
+import ru.job4j_design_new.lsp_new.parking.IParking;
+import ru.job4j_design_new.lsp_new.service.Service;
+import ru.job4j_design_new.lsp_new.service.ServiceFindPlace;
+import ru.job4j_design_new.lsp_new.manager.Manager;
+import ru.job4j_design_new.lsp_new.parking.ParkingCars;
+import ru.job4j_design_new.lsp_new.parking.ParkingTrucks;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
