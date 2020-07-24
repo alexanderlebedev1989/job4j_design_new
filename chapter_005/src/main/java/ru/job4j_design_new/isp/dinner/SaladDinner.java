@@ -6,7 +6,6 @@ import ru.job4j_design_new.isp.menu.Menu;
 import java.util.List;
 
 public class SaladDinner extends Menu implements IMenu {
-
     public SaladDinner(String name) {
         super(name);
     }

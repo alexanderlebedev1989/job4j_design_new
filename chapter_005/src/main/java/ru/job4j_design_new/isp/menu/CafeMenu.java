@@ -4,7 +4,6 @@ package ru.job4j_design_new.isp.menu;
 import java.util.List;
 
 public class CafeMenu extends Menu implements IMenu{
-
     public CafeMenu(String name) {
         super(name);
     }

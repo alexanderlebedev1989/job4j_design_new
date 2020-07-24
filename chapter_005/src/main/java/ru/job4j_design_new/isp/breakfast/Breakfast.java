@@ -7,7 +7,6 @@ import java.util.List;
 
 
 public class Breakfast extends Menu implements IMenu {
-
     public Breakfast(String name) {
         super(name);
     }

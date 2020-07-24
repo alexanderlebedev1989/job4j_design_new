@@ -5,7 +5,6 @@ import ru.job4j_design_new.isp.menu.Menu;
 import java.util.List;
 
 public class PancakeBreakfast extends Menu implements IMenu {
-
     public PancakeBreakfast(String name) {
         super(name);
     }
