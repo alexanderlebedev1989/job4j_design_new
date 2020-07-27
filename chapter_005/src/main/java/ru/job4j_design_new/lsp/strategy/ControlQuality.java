@@ -2,13 +2,11 @@ package ru.job4j_design_new.lsp.strategy;
 
 import ru.job4j_design_new.lsp.food.Food;
 import ru.job4j_design_new.lsp.storage.IStorage;
-import ru.job4j_design_new.lsp.storage.Shop;
-import ru.job4j_design_new.lsp.storage.Trash;
-import ru.job4j_design_new.lsp.storage.Warehouse;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlQuality implements Strategy {
+public class ControlQuality implements Operation {
 
     private final List<IStorage> storages;
 
@@ -27,6 +25,17 @@ public class ControlQuality implements Strategy {
                 storage.add(food);
                 break;
             }
+        }
+    }
+
+    @Override
+    public void resort() {
+        List<Food> foods = new ArrayList<>();
+        for (IStorage storage : storages) {
+            foods.addAll(storage.clear());
+        }
+        for (Food food : foods) {
+            distribute(food);
         }
     }
 }
