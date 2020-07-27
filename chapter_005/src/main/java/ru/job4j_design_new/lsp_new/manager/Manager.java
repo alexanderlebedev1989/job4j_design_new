@@ -23,30 +23,33 @@ public class Manager implements IManager {
 
     @Override
     public void givePlace(Car car) {
-        for (IParking p: parking) {
+        for (IParking p : parking) {
             if (p.accept(car) && p.freePlaces() > 0) {
-                p.add(car, service.standardPlace(p.allPlaces()));
-            } else if (p.accept(car)) {
-                int[] array = service.nonStandardPlace(cars.allPlaces());
-                if (array[0] != -1) {
-                    for (int place : array) {
-                        cars.add(car, place);
-                    }
-                }
-                car.setStandardPlace(false);
+                p.add(car, service.getPlace(p.allPlaces()));
+                return;
             }
+        }
+        if (car.isNonStandardParking()) {
+            int[] numberPlaces = service.findPlace(car, cars.allPlaces());
+            if (numberPlaces != null) {
+                for (int place : numberPlaces) {
+                    cars.add(car, place);
+                }
+            }
+            car.setSuitableParking(false);
         }
     }
 
     @Override
     public void takePlace(Car car) {
-        for (IParking p : parking) {
-            if (!car.isStandardPlace()) {
+        if (!car.isSuitableParking()) {
+            for (int i = 0; i < car.getSizeNonStandardPlace(); i++) {
                 cars.clear(car);
-                cars.clear(car);
-                break;
             }
-            else if (p.accept(car)) {
+            return;
+        }
+        for (IParking p : parking) {
+            if (p.accept(car)) {
                 p.clear(car);
                 break;
             }

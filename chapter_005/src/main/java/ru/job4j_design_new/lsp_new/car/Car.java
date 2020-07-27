@@ -1,12 +1,13 @@
 package ru.job4j_design_new.lsp_new.car;
 
-import com.sun.source.tree.IfTree;
-
 public class Car {
 
     private String name;
     private double weight;
-    private boolean standardPlace = true;
+    private boolean nonStandardParking = false;
+    private boolean suitableParking = true;
+    private int sizeNonStandardPlace;
+
 
     public Car(String name, double weight) {
         this.name = name;
@@ -21,13 +22,20 @@ public class Car {
         this.weight = weight;
     }
 
-    public boolean isStandardPlace() {
-        return standardPlace;
+
+    public boolean isNonStandardParking() {
+        return nonStandardParking;
     }
 
-    public void setStandardPlace(boolean standardPlace) {
-        this.standardPlace = standardPlace;
+    public int getSizeNonStandardPlace() {
+        return sizeNonStandardPlace;
     }
 
+    public boolean isSuitableParking() {
+        return suitableParking;
+    }
 
+    public void setSuitableParking(boolean suitableParking) {
+        this.suitableParking = suitableParking;
+    }
 }
