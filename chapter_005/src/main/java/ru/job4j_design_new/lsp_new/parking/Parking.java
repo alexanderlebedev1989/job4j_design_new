@@ -1,37 +1,65 @@
 package ru.job4j_design_new.lsp_new.parking;
 
-import ru.job4j_design_new.lsp_new.car.Car;
+import ru.job4j_design_new.lsp_new.car.Vehicle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class Parking {
-    private Car[] cars;
-    private int freePlaces;
-    private int countPlaces;
+public class Parking implements IParking {
 
-    private final double MAX_WEIGHT_CAR = 1.5;
-    private double MAX_WEIGHT_TRUCK = 3;
+    private final static int CAR_SIZE = 1;
 
-    public Parking(int countPlaces) {
-        this.cars = new Car[countPlaces];
-        this.freePlaces = countPlaces;
+    private List<Vehicle> cars = new ArrayList();
+    private List<Vehicle> trucks = new ArrayList<>();
+
+    private final int carsPlaces;
+    private final int trucksPlaces;
+
+    public Parking(int carsPlaces, int trucksPlaces) {
+        this.carsPlaces = carsPlaces;
+        this.trucksPlaces = trucksPlaces;
     }
 
-    public Car[] getCars() {
-        return cars;
+    @Override
+    public boolean add(Vehicle vehicle) {
+        if (!canPark(vehicle)) {
+            throw new IllegalArgumentException();
+        }
+        if (vehicle.size() == CAR_SIZE) {
+            cars.add(vehicle);
+        } else {
+            if (trucks.size() < trucksPlaces) {
+                trucks.add(vehicle);
+            } else {
+                IntStream.range(0, vehicle.size()).forEach(t -> cars.add(vehicle));
+            }
+        }
+        return true;
     }
 
-    public double getMAX_WEIGHT_CAR() {
-        return MAX_WEIGHT_CAR;
+    @Override
+    public boolean canPark(Vehicle vehicle) {
+        if (vehicle.size() == CAR_SIZE && cars.size() == carsPlaces) {
+            return false;
+        }
+        if (vehicle.size() != CAR_SIZE && (trucks.size() == trucksPlaces
+                && vehicle.size() > (carsPlaces - cars.size()))) {
+            return false;
+        }
+        return true;
     }
 
-    public double getMAX_WEIGHT_TRUCK() {
-        return MAX_WEIGHT_TRUCK;
-    }
-
-    public int getFreePlaces() {
-        return freePlaces;
-    }
-
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
+    @Override
+    public Vehicle retrieve(String number) {
+        List<Vehicle> iCars = cars.stream().filter(v -> v.number().equals(number)).collect(Collectors.toList());
+        if (iCars.size() > 0 && cars.removeAll(iCars)) {
+            return iCars.get(0);
+        }
+        List<Vehicle> iTrucks = trucks.stream().filter(v -> v.number().equals(number)).collect(Collectors.toList());
+        if (iTrucks.size() > 0 && trucks.removeAll(iTrucks)) {
+            return iTrucks.get(0);
+        }
+        return null;
     }
 }

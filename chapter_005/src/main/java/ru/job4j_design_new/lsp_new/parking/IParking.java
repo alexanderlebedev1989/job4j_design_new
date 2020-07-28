@@ -1,9 +1,9 @@
 package ru.job4j_design_new.lsp_new.parking;
 
-import ru.job4j_design_new.lsp_new.car.Car;
+import ru.job4j_design_new.lsp_new.car.Vehicle;
 
-public interface IParking extends IParkingInfo {
-    boolean accept(Car car);
-    void add(Car car, int numberPlace);
-    void clear(Car car);
+public interface IParking {
+    boolean add(Vehicle vehicle);
+    boolean canPark(Vehicle vehicle);
+    Vehicle retrieve(String number);
 }
